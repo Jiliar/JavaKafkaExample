@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController("KafkaController")
 public class KafkaController {
+
     @Autowired
     private KafkaService kafkaProducer;
-    @GetMapping("/{send}")
-    public String sendMessage(@PathVariable String message, @PathVariable String kafkaTopic) {
+
+    @GetMapping("send/{message}/{kafkaTopic}")
+    public String sendMessage(@PathVariable("message") String message,
+                              @PathVariable("kafkaTopic") String kafkaTopic) {
         String respuesta = "¡Message has been sent successfully!";
         try {
             kafkaProducer.send(message, kafkaTopic);

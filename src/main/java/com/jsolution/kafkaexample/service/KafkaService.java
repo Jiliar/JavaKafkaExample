@@ -9,6 +9,11 @@ public class KafkaService {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
     public void send(String message, String kafkaTopic) {
-        kafkaTemplate.send(kafkaTopic, message);
+        var result = kafkaTemplate.send(kafkaTopic, message);
+        result.completable()
+               .whenComplete(
+                       (stringStringSendResult, throwable) ->{
+                           System.out.println(stringStringSendResult);
+                       });
     }
 }
